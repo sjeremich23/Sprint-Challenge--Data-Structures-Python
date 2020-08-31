@@ -1,16 +1,20 @@
+from copy import copy
+
+
 class Node:
-    def __init__(self, value=None, next_node=None):
+    def __init__(self, value=None, next=None):
         self.value = value
-        self.next_node = next_node
+        self.next = next
 
     def get_value(self):
         return self.value
 
     def get_next(self):
-        return self.next_node
+        return self.next
 
     def set_next(self, new_next):
-        self.next_node = new_next
+        self.next = new_next
+
 
 class LinkedList:
     def __init__(self):
@@ -39,4 +43,22 @@ class LinkedList:
         return False
 
     def reverse_list(self, node, prev):
-        pass
+        if node is None:
+            return
+        
+        else:
+            # if there is no next node
+            if node.next is None:
+                # current node = head
+                self.head = node
+                # next node the previous
+                node.next = prev
+                return
+
+            # assigning new_node to next node
+            new_node = node.next
+            # changing the next pointer to previous
+            node.next = prev
+            # calls function again with recursive on the node
+            # passing in new_node and node
+            self.reverse_list(new_node, node)
